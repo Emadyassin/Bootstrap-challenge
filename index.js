@@ -1,8 +1,6 @@
 var products = [];
 
-localStorage.localProducts+='';
-
-if (localStorage.localProducts != 'null'){
+if (localStorage.localProducts != 'null' && localStorage.localProducts != 'undefined' ){
     products = JSON.parse(localStorage.localProducts);
 }
   
