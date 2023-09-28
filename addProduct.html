@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" onclick="saveToLocal()" href="index.html">Home</a>
+                        <a class="nav-link active" onclick="saveToLocal()" aria-current="page" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="saveToLocal()" href="addProduct.html">Add product</a>
@@ -49,12 +49,39 @@
     </nav>
     <header class="bg-color-black text-white w-100 d-flex justify-content-center align-items-center flex-column">
         <h1 class="fw-bold">Shop in style</h1>
-        <p>With this shop hompeage template</p>
+        <p>With this shop homepage template</p>
     </header>
     <main class="pt-5 pb-5">
         <div class="container">
-            <div id="products" class="row">
-            </div>
+            <form id="form" class="row">
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="Product-name" class="form-label">Product name</label>
+                        <div class="input-group">
+                        <input type="text" class="form-control" id="Product-name" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="Product-description" class="form-label">Product description</label>
+                        <div class="input-group">
+                        <input type="text" class="form-control" id="Product-description" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="Product-price" class="form-label">Product price</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="Product-price" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="Product-img" class="form-label">Image URL</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="Product-img" aria-describedby="basic-addon3 basic-addon4">
+                    </div>
+                </div>
+                <div class="mb-3 col-12 col-md-3 d-flex justify-content-end">
+                    <button type="button" onclick="addProducts()" class="btn btn-dark w-100">Add Product</button>
+                </div>
+            </form>
         </div>
     </main>
     <footer class="bg-color-black text-white w-100 d-flex justify-content-center align-items-center flex-column">
@@ -65,12 +92,6 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="index.js"></script>
-    <script>
-        if (products != null) {
-        products = JSON.parse(localStorage.localProducts);
-        refresh();
-      }
-    </script>
 </body>
 
 </html>
