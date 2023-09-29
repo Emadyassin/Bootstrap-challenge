@@ -39,7 +39,7 @@
                     </li>
                 </ul>
 
-                <a class=" btn btn-outline-dark ">
+                <a class=" btn btn-outline-dark">
                     <div class="cart-btn d-flex justify-content-around align-items-center w-100 flex-row">
                         <i class="cart-icon fa-solid fa-cart-shopping"></i>card
                     </div>
@@ -50,6 +50,12 @@
     <header class="bg-color-black text-white w-100 d-flex justify-content-center align-items-center flex-column">
         <h1 class="fw-bold">Shop in style</h1>
         <p>With this shop hompeage template</p>
+        <div class="row">
+            <div class="input-group mb-3 ">
+                <input id="search-box" type="text"  class="form-control search-box" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn bg-secondary-subtle" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
     </header>
     <main class="pt-5 pb-5">
         <div class="container">
@@ -66,10 +72,12 @@
         crossorigin="anonymous"></script>
     <script src="index.js"></script>
     <script>
-        if (products != null) {
+        if (localStorage.localProducts != 'null' && localStorage.localProducts != undefined) {
         products = JSON.parse(localStorage.localProducts);
-        refresh();
-      }
+        refresh(products);
+        const searchBoxValue = document.querySelector(".search-box");
+        searchBoxValue.addEventListener("input", searchFunction);
+        }
     </script>
 </body>
 

@@ -79,7 +79,9 @@
                     </div>
                 </div>
                 <div class="mb-3 col-12 col-md-3 d-flex justify-content-end">
-                    <button type="button" onclick="addProducts()" class="btn btn-dark w-100">Add Product</button>
+                    <button id="btnAddProduct" type="button" onclick="addProducts()" class="btn btn-dark w-100">
+                        <span id="spinner" class="spinner-border-sm" aria-hidden="true"></span>
+                        <span role="status">Add Product</span></button>
                 </div>
             </form>
         </div>

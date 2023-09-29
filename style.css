@@ -61,3 +61,8 @@ header p {
 footer {
     height: 80px;
 }
+
+input:focus{
+    border-color: none !important;
+    box-shadow:none !important;
+}

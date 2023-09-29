@@ -1,13 +1,16 @@
 var products = [];
 
-if (localStorage.localProducts != 'null' && localStorage.localProducts != undefined ){
-    products = JSON.parse(localStorage.localProducts);
+if (
+  localStorage.localProducts != "null" &&
+  localStorage.localProducts != undefined
+) {
+  products = JSON.parse(localStorage.localProducts);
 }
-  
-let refresh = () =>{
-    var items ='';
-    products.forEach((element) => {
-        items += `
+
+let refresh = (productsArray) => {
+  var items = "";
+  productsArray.forEach((element) => {
+    items += `
         <div class="col-12 col-md-4 col-lg-3 p-3">
                             <div class="card rounded-3 h-100">
                                 <p class="Sale bg-color-black text-white m-0 position-absolute ">Sale</p>
@@ -29,20 +32,42 @@ let refresh = () =>{
                             </div>
                         </div>
         `;
-      }
-      );
-      if (items != null) {
-        document.getElementById('products').innerHTML = items;
-      }
-    
-    }
+  });
+  if (items != null) {
+    document.getElementById("products").innerHTML = items;
+  }
+};
 
-  let addProducts = ( ) =>{
+var base64Image = "";
+function encodeImageFileAsURL() {
+  return new Promise(function (resolve, reject) {
+    const imageInput = document.getElementById("Product-img");
+    const selectedFile = imageInput.files[0];
+    if (selectedFile) {
+      setTimeout(function () {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          base64Image = e.target.result;
+          resolve();
+        };
+        reader.readAsDataURL(selectedFile);
+      }, 2000);
+    }
+  });
+}
+
+let addProducts = () => {
+  document.getElementById("btnAddProduct").disabled = false;
+  document.getElementById("spinner").classList.add("spinner-border");
+  encodeImageFileAsURL().then((callback) => {
+
+    console.log(base64Image);
+
     products.push({
       title: document.getElementById("Product-name").value,
       description: document.getElementById("Product-description").value,
       price: Number(document.getElementById("Product-price").value),
-      image: document.getElementById("Product-img").value,
+      image: base64Image,
     });
 
     document.getElementById("Product-name").value = null;
@@ -51,39 +76,26 @@ let refresh = () =>{
     document.getElementById("Product-img").value = null;
 
     saveToLocal();
-}
+    document.getElementById("spinner").classList.remove("spinner-border");
+    document.getElementById("btnAddProduct").removeAttribute("disabled");
+  });
+};
 
-  
-  var calcPrice = () => {
-    total = 0;
-    products.forEach((element) => {
-      total += element.price;
-    });
-    return total;
-  };
-  
-  var searchProducts = () => {
-    var searchPox = prompt("Search by product title");
-    var searchArry = [];
-    products.forEach((element) => {
-      var proTitle = element.title.toUpperCase;
-      if (proTitle.inclide(searchPox.toUpperCase)) {
-      }
-    });
-    return total;
-  };
-  
-  let searchFunction = () => {
-    // var searchBox = prompt("Search by product title");
-    var searchResult = [];
-    var i = 0;
-    products.forEach((element) => {
-      if (element.title.toUpperCase().includes(searchBox.toUpperCase())) {
-        searchResult.push(element);
-      }
-    });
-    return showProducts(searchResult)
-  };
-  
+var calcPrice = () => {
+  total = 0;
+  products.forEach((element) => {
+    total += element.price;
+  });
+  return total;
+};
 
-let saveToLocal = ()=>localStorage.localProducts = JSON.stringify(products);
+let searchFunction = () => {
+  var filter = "title";
+  var searchValue = document.getElementById("search-box").value;
+  var filteredData = products.filter(function (obj) {
+    return obj[filter].toUpperCase().includes(searchValue.toUpperCase());
+  });
+  refresh(filteredData);
+};
+
+let saveToLocal = () => (localStorage.localProducts = JSON.stringify(products));
