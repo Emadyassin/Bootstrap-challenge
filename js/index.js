@@ -41,7 +41,7 @@ const renderHtml = (htmlString) => {
 
 var products = [];
 
-products = getStorage("localProducts");
+products = getStorage("shopProducts");
 
 // -----------Components-------------
 
@@ -379,10 +379,10 @@ renderHtml(
 if (page === "index.html") renderHtml(headerComponent());
 
 if (page === "index.html")
-  renderHtml(shopMainComponent(getStorage("localProducts")));
+  renderHtml(shopMainComponent(getStorage("shopProducts")));
 
 if (page === "dashboard.html")
-  renderHtml(dashboardTableComponent(getStorage("localProducts")));
+  renderHtml(dashboardTableComponent(getStorage("shopProducts")));
 renderHtml(addProModuleComponent());
 renderHtml(editProModuleComponent());
 renderHtml(delProModuleComponent());
@@ -437,8 +437,8 @@ let addProducts = () => {
     document.getElementById("Product-price").value = null;
     document.getElementById("Product-img").value = null;
 
-    setStorage("localProducts", products);
-    document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("localProducts"));
+    setStorage("shopProducts", products);
+    document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("shopProducts"));
     document.getElementById("spinner").classList.remove("spinner-border");
     document.getElementById("btnAddProduct").removeAttribute("disabled");
   });
@@ -446,8 +446,8 @@ let addProducts = () => {
 
 let deleteProduct = (productsArray, index) => {
   productsArray.splice(index, index + 1);
-  setStorage("localProducts", products);
-  document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("localProducts"));
+  setStorage("shopProducts", products);
+  document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("shopProducts"));
 };
 
 let updateProducts = (productsArray, index) => {
@@ -466,8 +466,8 @@ encodeImageFileAsURL("update-Product-img").then((callback) => {
     productsArray[index].image =
     base64Image;
   
-    setStorage("localProducts", products);
-    document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("localProducts"));
+    setStorage("shopProducts", products);
+    document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("shopProducts"));
   });
 };
 
