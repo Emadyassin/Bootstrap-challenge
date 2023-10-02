@@ -16,7 +16,6 @@ const els = (elements) => document.querySelectorAll(elements);
 
 var path = window.location.pathname;
 var page = path.split("/").pop();
-console.log(typeof page);
 
 const setStorage = (key, value) => {
   localStorage.setItem(
@@ -222,12 +221,14 @@ const dashboardTableComponent = (headerItems) => {
         <td class="table-data">${item.description}</td>
         <td class="table-data">${item.price}</td>
         <td class="table-data">
-          <button type="button"  onclick="addButtonsToAlertDeleteProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#deleteProductAlert">
-            <i class="fa-solid fa-trash text-danger"></i> 
-          </button>
-          <button type="button" onclick="addFormToModelEditProducts(products ,${index}) ;addButtonsToEditProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#editProductModal">
-            <i class="fa-solid fa-pen text-warning"></i> 
-          </button>
+          <div class="d-flex">
+            <button type="button"  onclick="addButtonsToAlertDeleteProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#deleteProductAlert">
+              <i class="fa-solid fa-trash text-danger"></i> 
+            </button>
+            <button type="button" onclick="addFormToModelEditProducts(products ,${index}) ;addButtonsToEditProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#editProductModal">
+              <i class="fa-solid fa-pen text-warning"></i> 
+            </button>
+          </div>
         </td>
       </tr>    
           `;
@@ -237,13 +238,14 @@ const dashboardTableComponent = (headerItems) => {
   return `
         <main class="pt-5 pb-5">
             <div class="container">
+                <div class="d-flex justify-content-between m-1"> 
+                    <p>
+                        List of products
+                    </p>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addProductModal">Add products</button>
+                </div>
                 <div class="table-responsive">
-                    <div class="d-flex justify-content-between m-1"> 
-                        <p>
-                            List of products
-                        </p>
-                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addProductModal">Add products</button>
-                    </div>
+                    
                     <table class="table table-striped caption-top">
                         <thead>
                             <tr>
@@ -365,11 +367,11 @@ renderHtml(
   navComponent([
     {
       title: "Shop",
-      link: "index.html",
+      link: "../index.html",
     },
     {
       title: "Dashboard",
-      link: "dashboard.html",
+      link: "page/dashboard.html",
     },
   ])
 );
@@ -449,9 +451,7 @@ let deleteProduct = (productsArray, index) => {
 };
 
 let updateProducts = (productsArray, index) => {
-console.log('1');
 encodeImageFileAsURL("update-Product-img").then((callback) => {
-    console.log('2');
     productsArray[index].title = document.getElementById(
       "update-Product-name"
     ).value;
