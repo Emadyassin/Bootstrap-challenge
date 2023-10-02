@@ -14,7 +14,7 @@ h1{
 }
 
 .bg-color-black {
-    background-color: var(--black);
+    background-color: var(--black) !important;
 }
 
 header {
@@ -65,4 +65,19 @@ footer {
 input:focus{
     border-color: none !important;
     box-shadow:none !important;
+}
+img{
+    object-fit: cover;
+}
+
+.table-image{
+    height: 80px;
+    width: 80px;
+}
+.table-data{
+    line-height:80px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
