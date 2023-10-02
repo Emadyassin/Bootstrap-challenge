@@ -371,10 +371,6 @@ renderHtml(
       title: "Dashboard",
       link: "dashboard.html",
     },
-    {
-      title: "Add Product",
-      link: "addProduct.html",
-    },
   ])
 );
 
@@ -404,9 +400,9 @@ let searchFunction = () => {
 };
 
 var base64Image = "";
-function encodeImageFileAsURL() {
+function encodeImageFileAsURL(inputId) {
   return new Promise(function (resolve, reject) {
-    const imageInput = document.getElementById("Product-img");
+    const imageInput = document.getElementById(inputId);
     const selectedFile = imageInput.files[0];
     if (selectedFile) {
       setTimeout(function () {
@@ -424,7 +420,7 @@ function encodeImageFileAsURL() {
 let addProducts = () => {
   document.getElementById("btnAddProduct").disabled = false;
   document.getElementById("spinner").classList.add("spinner-border");
-  encodeImageFileAsURL().then((callback) => {
+  encodeImageFileAsURL("Product-img").then((callback) => {
     // console.log(base64Image);
 
     products.push({
@@ -453,22 +449,26 @@ let deleteProduct = (productsArray, index) => {
 };
 
 let updateProducts = (productsArray, index) => {
-  productsArray[index].title = document.getElementById(
-    "update-Product-name"
-  ).value;
-  productsArray[index].description = document.getElementById(
-    "update-Product-description"
-  ).value;
-  productsArray[index].price = document.getElementById(
-    "update-Product-price"
-  ).value;
-  if (document.getElementById("update-Product-img").value)
-
-  productsArray[index].image =
-    document.getElementById("update-Product-img").value;
-
-  setStorage("localProducts", products);
-  document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("localProducts"));
+console.log('1');
+encodeImageFileAsURL("update-Product-img").then((callback) => {
+    console.log('2');
+    productsArray[index].title = document.getElementById(
+      "update-Product-name"
+    ).value;
+    productsArray[index].description = document.getElementById(
+      "update-Product-description"
+    ).value;
+    productsArray[index].price = document.getElementById(
+      "update-Product-price"
+    ).value;
+    if (document.getElementById("update-Product-img").value)
+  if(base64Image)
+    productsArray[index].image =
+    base64Image;
+  
+    setStorage("localProducts", products);
+    document.getElementById("table-data").innerHTML = refreshDashboardTableComponent(getStorage("localProducts"));
+  });
 };
 
 let addFormToModelEditProducts = (productsArray, index) => {
