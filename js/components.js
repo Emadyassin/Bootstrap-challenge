@@ -387,23 +387,24 @@ if (page === "index.html") renderHtml(headerComponent());
 if (page === "index.html")
   renderHtml(shopMainComponent(getStorage("shopProducts")));
 
-if (page === "dashboard.html")
+var cards = [
+  {
+    title: "Products No",
+    value: products.length,
+  },
+  {
+    title: "Products Price",
+    value: "$ " + calcPrice(),
+  },
+];
+
+if (page === "dashboard.html") {
   renderHtml(
-    dashboardCardComponent([
-      {
-        title: "Products No",
-        value: products.length,
-      },
-      {
-        title: "Products Price",
-        value: "$ " + calcPrice(),
-      },
-    ])
+    dashboardCardComponent(cards)
   );
-
-
 renderHtml(dashboardTableComponent(getStorage("shopProducts")));
 renderHtml(addProModuleComponent());
 renderHtml(editProModuleComponent());
 renderHtml(delProModuleComponent());
+};
 renderHtml(footerComponent());

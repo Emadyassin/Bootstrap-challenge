@@ -56,8 +56,18 @@ let addProducts = () => {
     setStorage("shopProducts", products);
     document.getElementById("table-data").innerHTML =
       refreshDashboardTableComponent(getStorage("shopProducts"));
-    // document.getElementById("card-data").innerHTML =
-    //   refreshDashboardCardComponent(getStorage("shopProducts"));
+    cards = [
+      {
+        title: "Products No",
+        value: products.length,
+      },
+      {
+        title: "Products Price",
+        value: "$ " + calcPrice(),
+      },
+    ];
+    document.getElementById("card-data").innerHTML =
+      refreshDashboardCardComponent(cards);
     document.getElementById("spinner").classList.remove("spinner-border");
     document.getElementById("btnAddProduct").removeAttribute("disabled");
 
@@ -72,9 +82,18 @@ let deleteProduct = (productsArray, index) => {
   setStorage("shopProducts", products);
   document.getElementById("table-data").innerHTML =
     refreshDashboardTableComponent(getStorage("shopProducts"));
-
-//   document.getElementById("card-data").innerHTML =
-//     refreshDashboardCardComponent(getStorage("shopProducts"));
+  cards = [
+    {
+      title: "Products No",
+      value: products.length,
+    },
+    {
+      title: "Products Price",
+      value: "$ " + calcPrice(),
+    },
+  ];
+  document.getElementById("card-data").innerHTML =
+    refreshDashboardCardComponent(cards);
 };
 
 let updateProducts = (productsArray, index) => {
@@ -94,8 +113,18 @@ let updateProducts = (productsArray, index) => {
     setStorage("shopProducts", products);
     document.getElementById("table-data").innerHTML =
       refreshDashboardTableComponent(getStorage("shopProducts"));
-    // document.getElementById("card-data").innerHTML =
-    //   refreshDashboardCardComponent(getStorage("shopProducts"));
+    cards = [
+      {
+        title: "Products No",
+        value: products.length,
+      },
+      {
+        title: "Products Price",
+        value: "$ " + calcPrice(),
+      },
+    ];
+    document.getElementById("card-data").innerHTML =
+      refreshDashboardCardComponent(cards);
   });
 };
 
