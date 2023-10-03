@@ -81,3 +81,11 @@ img{
 .cursor-pointer{
     cursor: pointer;
 }
+
+.card-bg-img{
+    position: absolute;
+    filter: invert(0.5);
+    height: 150%;
+    transform: rotate(-45deg);
+    right: -60px;
+}
