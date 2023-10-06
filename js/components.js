@@ -294,7 +294,7 @@ const addProModuleComponent = () => {
   <div class="modal-dialog">
     <form id="addForm" class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+        <h1 class="modal-title fs-5">Add Product</h1>
         <button
           type="button"
           class="btn-close"
@@ -395,8 +395,8 @@ const editProModuleComponent = () => {
         <form id="updateForm" class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        Add Product
+                    <h1 class="modal-title fs-5">
+                        Edit Product
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -416,7 +416,7 @@ const delProModuleComponent = () => {
         <div class="modal-dialog">
             <form class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
+                    <h1 class="modal-title fs-5 text-danger">
                         Are you shore you want to delete this product ?
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -18,10 +18,10 @@ let calcPrice = () => {
 var base64Image = "";
 function encodeImageFileAsURL(inputId) {
   return new Promise(function (resolve, reject) {
-  const imageInput = el(inputId);
-  const selectedFile = imageInput.files[0];
-  if (selectedFile) {
-    setTimeout(function () {
+    const imageInput = el(inputId);
+    const selectedFile = imageInput.files[0];
+    if (selectedFile) {
+      setTimeout(function () {
         const reader = new FileReader();
         reader.onload = function (e) {
           base64Image = e.target.result;
@@ -29,54 +29,102 @@ function encodeImageFileAsURL(inputId) {
         };
         reader.readAsDataURL(selectedFile);
       }, 2000);
+    } else {
+      resolve();
     }
-  else{
-    resolve();
-  }
   });
 }
 
 let addProducts = () => {
-  el("#btnAddProduct").disabled = false;
-  el("#addSpinner").classList.add("spinner-border");
-  encodeImageFileAsURL("#Product-img").then((callback) => {
-    products.push({
-      title: el("#Product-name").value,
-      description: el("#Product-description").value,
-      price: Number(el("#Product-price").value),
-      image: base64Image,
+  if (
+    el("#Product-name").value !== "" &&
+    el("#Product-description").value !== "" &&
+    el("#Product-price").value !== "" &&
+    el("#Product-img").value !== ""
+  ) {
+    el("#btnAddProduct").disabled = false;
+    el("#addSpinner").classList.add("spinner-border");
+    encodeImageFileAsURL("#Product-img").then((callback) => {
+      products.push({
+        title: el("#Product-name").value,
+        description: el("#Product-description").value,
+        price: Number(el("#Product-price").value),
+        image: base64Image,
+      });
+
+      el("#Product-name").value = null;
+      el("#Product-description").value = null;
+      el("#Product-price").value = null;
+      el("#Product-img").value = null;
+
+      setStorage("shopProducts", products);
+      el("#table-data").innerHTML = tableRowsComponent(
+        getStorage("shopProducts")
+      );
+      cards = [
+        {
+          title: "Products No",
+          value: products.length,
+        },
+        {
+          title: "Products Price",
+          value: "$ " + calcPrice(),
+        },
+      ];
+      el("#card-data").innerHTML = statisticsCardComponent(cards);
+      el("#addSpinner").classList.remove("spinner-border");
+      el("#btnAddProduct").removeAttribute("disabled");
+      const addProductModal =
+        bootstrap.Modal.getOrCreateInstance("#addProductModal");
+      addProductModal.toggle();
     });
+  }
+};
 
-    el("#Product-name").value = null;
-    el("#Product-description").value = null;
-    el("#Product-price").value = null;
-    el("#Product-img").value = null;
+let updateProducts = (productsArray, index) => {
+  if (
+    el("#Product-name").value !== "" &&
+    el("#Product-description").value !== "" &&
+    el("#Product-price").value !== ""
+  ) {
+    el("#btnUpdateProduct").disabled = false;
+    el("#updateSpinner").classList.add("spinner-border");
 
-    setStorage("shopProducts", products);
-    el("#table-data").innerHTML = tableRowsComponent(
-      getStorage("shopProducts")
-    );
-    cards = [
-      {
-        title: "Products No",
-        value: products.length,
-      },
-      {
-        title: "Products Price",
-        value: "$ " + calcPrice(),
-      },
-    ];
-    el("#card-data").innerHTML = statisticsCardComponent(cards);
-    el("#addSpinner").classList.remove("spinner-border");
-    el("#btnAddProduct").removeAttribute("disabled");
-    const addProductModal =
-      bootstrap.Modal.getOrCreateInstance("#addProductModal");
-    addProductModal.toggle();
-  });
+    encodeImageFileAsURL("#update-Product-img").finally(() => {
+      productsArray[index].title = el("#update-Product-name").value;
+      productsArray[index].description = el(
+        "#update-Product-description"
+      ).value;
+      productsArray[index].price = el("#update-Product-price").value;
+      if (el("#update-Product-img").value)
+        if (base64Image) productsArray[index].image = base64Image;
+
+      setStorage("shopProducts", products);
+      el("#table-data").innerHTML = tableRowsComponent(
+        getStorage("shopProducts")
+      );
+      cards = [
+        {
+          title: "Products No",
+          value: products.length,
+        },
+        {
+          title: "Products Price",
+          value: "$ " + calcPrice(),
+        },
+      ];
+      el("#card-data").innerHTML = statisticsCardComponent(cards);
+      el("#updateSpinner").classList.remove("spinner-border");
+      el("#btnUpdateProduct").removeAttribute("disabled");
+      const updateProductModal =
+        bootstrap.Modal.getOrCreateInstance("#editProductModal");
+      updateProductModal.toggle();
+    });
+  }
 };
 
 let deleteProduct = (productsArray, index) => {
-  productsArray.splice(index, index + 1);
+  productsArray.splice(index, index === 0 ? index + 1 : index);
   setStorage("shopProducts", products);
   el("#table-data").innerHTML = tableRowsComponent(getStorage("shopProducts"));
   cards = [
@@ -90,41 +138,6 @@ let deleteProduct = (productsArray, index) => {
     },
   ];
   el("#card-data").innerHTML = statisticsCardComponent(cards);
-};
-
-let updateProducts = (productsArray, index) => {
-  
-  el("#btnUpdateProduct").disabled = false;
-  el("#updateSpinner").classList.add("spinner-border");
-
-  encodeImageFileAsURL("#update-Product-img").finally(() => {
-    productsArray[index].title = el("#update-Product-name").value;
-    productsArray[index].description = el("#update-Product-description").value;
-    productsArray[index].price = el("#update-Product-price").value;
-    if (el("#update-Product-img").value)
-      if (base64Image) productsArray[index].image = base64Image;
-
-    setStorage("shopProducts", products);
-    el("#table-data").innerHTML = tableRowsComponent(
-      getStorage("shopProducts")
-    );
-    cards = [
-      {
-        title: "Products No",
-        value: products.length,
-      },
-      {
-        title: "Products Price",
-        value: "$ " + calcPrice(),
-      },
-    ];
-    el("#card-data").innerHTML = statisticsCardComponent(cards);
-    el("#updateSpinner").classList.remove("spinner-border");
-    el("#btnUpdateProduct").removeAttribute("disabled");
-    const updateProductModal =
-      bootstrap.Modal.getOrCreateInstance("#editProductModal");
-    updateProductModal.toggle();
-  });
 };
 
 let addFormToModelEditProducts = (productsArray, index) => {
@@ -194,11 +207,11 @@ let addButtonsToEditProducts = (productsArray, index) => {
 
 window.addEventListener("load", () => {
   if (page === "index.html") {
-      const searchBoxValue = el(".search-box");
-      searchBoxValue.addEventListener("input", searchFunction);
+    const searchBoxValue = el(".search-box");
+    searchBoxValue.addEventListener("input", searchFunction);
   }
   if (page === "dashboard.html") {
-      stopFromSubmitRefresh(el("#addForm"));
-      stopFromSubmitRefresh(el("#updateForm"));
+    stopFromSubmitRefresh(el("#addForm"));
+    stopFromSubmitRefresh(el("#updateForm"));
   }
 });
