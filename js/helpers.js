@@ -39,6 +39,22 @@ const renderHtml = (htmlString) => {
   app.innerHTML += htmlString;
 };
 
+let stopFromSubmitRefresh = (formId) => {
+  formId.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+}
+
+let toggleModalEvent = (modelId ,model) => {
+  console.log(modelId,model)
+  modelId .addEventListener("click", () => {
+  model.toggle();
+        });
+
+        
+} 
+
+
 var products = [];
 
 products = getStorage("shopProducts");

@@ -1,3 +1,83 @@
+const loadingComponent = () => {
+  return `
+      <div class="loading-page">
+        <div class="Character-body">
+          <div class="hair">
+            <div class="hair1"></div>
+            <div class="hair2"></div>
+            <div class="hair3"></div>
+            <div class="hair4"></div>
+            <div class="hair5"></div>
+            <div class="hair6"></div>
+            <div class="hair7"></div>
+            <div class="hair8"></div>
+          </div>
+          <div class="Glasses">
+            <div class="belt belt1"></div>
+            <div class="belt belt2"></div>
+            <div class="glasses-border left">
+              <div class="eye l-eye">
+                <div class="light"></div>
+              </div>
+            </div>
+            <div class="glasses-border right">
+              <div class="eye r-eye">
+                <div class="light"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mouth">
+            <div class="teeth teeth1"></div>
+            <div class="teeth teeth2"></div>
+            <div class="teeth teeth3"></div>
+            <div class="teeth teeth4"></div>
+            <div class="tongue"></div>
+          </div>
+          <div class="hand left-hand">
+            <div class="top-hand"></div>
+            <div class="top-hand2"></div>
+            <div class="bottom-hand"></div>
+            <div class="bottom-hand2"></div>
+            <div class="finger"></div>
+          </div>
+          <div class="hand right-hand">
+              <div class="top-hand"></div>
+              <div class="top-hand2"></div>
+              <div class="bottom-hand"></div>
+              <div class="bottom-hand2"></div>
+              <div class="finger"></div>
+          </div>
+          <div class="foot left-foot">
+            <div class="Shoe"></div>
+          </div>
+          <div class="foot right-foot">
+            <div class="Shoe"></div>
+          </div>
+        </div>
+        <div>
+          <div id="load">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>  
+      `;
+};
+
+renderHtml(loadingComponent());
+
+window.addEventListener('load', () => {
+  const content = el('.loading-page');
+  setTimeout(() => {
+    content.remove();
+  }, 2500);
+});
+
 const navComponent = (headerItems) => {
   const elements = headerItems
     .map((item) => {
@@ -48,7 +128,7 @@ const headerComponent = () => {
       `;
 };
 
-const refreshMainComponent = (headerItems) => {
+const ProductCardComponent = (headerItems) => {
   console.log(headerItems);
   if (!headerItems) return "";
   const elements = headerItems
@@ -83,45 +163,18 @@ const refreshMainComponent = (headerItems) => {
     `;
 };
 
-const shopMainComponent = (headerItems) => {
-  if (!headerItems) return "";
-  const elements = headerItems
-    .map((item) => {
-      return `
-        <div class="col-12 col-md-4 col-lg-3 p-3">
-            <div class="card rounded-3 h-100">
-                <p class="Sale bg-color-black text-white m-0 position-absolute ">Sale</p>
-                <img src="${item.image}" class="bg-dark-subtle cart-image w-100 rounded-3 rounded-bottom-0">
-                <div class="card-body d-flex flex-column align-content-center align-items-center justify-content-between gap-3">
-                    <div class="card-info d-flex flex-column text-center">
-                        <h5 class="card-title fw-bold">${item.title}</h5>
-                        <div class="d-flex justify-content-center p-2"><i class="fa-solid fa-star bg-star-y"></i><i
-                                class="fa-solid fa-star bg-star-y"></i><i
-                                class="fa-solid fa-star bg-star-y"></i><i
-                                class="fa-solid fa-star bg-star-y"></i><i
-                                class="fa-solid fa-star bg-star-y"></i></div>
-                        <p class="card-text fw-medium">$${item.price}</p>
-                    </div>
-                    <div class="card-ptn">
-                        <a href="#" class="w-100 w-md-50 btn btn-outline-dark fw-medium">View options</a>
-                    </div>
-                </div>
-            </div>
-        </div>       
-          `;
-    })
-    .join("");
-
+const shopMainProductComponent = (headerItems) => {
   return `
         <main class="pt-5 pb-5">
             <div class="container">
                 <div id="products" class="row">
-                  ${elements}
+                  ${ProductCardComponent(headerItems)}
                 </div>
             </div>
         </main>
         `;
 };
+
 const footerComponent = () => {
   return `
     <footer class="bg-color-black text-white w-100 d-flex justify-content-center align-items-center flex-column">
@@ -129,7 +182,8 @@ const footerComponent = () => {
     </footer>
       `;
 };
-const refreshDashboardCardComponent = (headerItems) => {
+
+const statisticsCardComponent = (headerItems) => {
   if (!headerItems) return "";
   const elements = headerItems
     .map((item) => {
@@ -155,35 +209,16 @@ const refreshDashboardCardComponent = (headerItems) => {
       `;
 };
 const dashboardCardComponent = (headerItems) => {
-  const elements = headerItems
-    .map((item) => {
-      return `
-      <div class="col-12 col-md-${12 / headerItems.length} p-3">
-        <div class="card rounded-5 h-100 overflow-hidden">
-          <img class="card-bg-img" src="../dots.png" alt="" srcset="">
-          <div class="card-body d-flex flex-column justify-content-between gap-3 text-white bg-color-black">
-              <div class="card-info d-flex flex-column ">
-                  <p class="card-text fw-medium z-1">${item.title}</p>
-                  <h5 class="card-title fw-bold text-center fa-2x z-1"> ${
-                    item.value
-                  }</h5>
-              </div>
-          </div>
-        </div>
-      </div>
-    `;
-    })
-    .join("");
   return `
   <div class="container">
     <div class="row"  id="card-data">
-      ${elements} 
+      ${statisticsCardComponent(headerItems)} 
     </div>  
   </div>  
       `;
 };
 
-const refreshDashboardTableComponent = (headerItems) => {
+const tableRowsComponent = (headerItems) => {
   if (!headerItems) return "";
   const elements = headerItems
     .map((item, index) => {
@@ -214,33 +249,6 @@ const refreshDashboardTableComponent = (headerItems) => {
 };
 
 const dashboardTableComponent = (headerItems) => {
-  if (!headerItems) return "";
-  const elements = headerItems
-    .map((item, index) => {
-      return `
-        <tr>
-        <th scope="row" class="table-data">${index + 1}</th>
-        <td><img src="${
-          item.image
-        }" class="bg-dark-subtle cart-image table-image rounded-5 "></td>
-        <td class="table-data">${item.title}</td>
-        <td class="table-data">${item.description}</td>
-        <td class="table-data">${item.price}</td>
-        <td class="table-data">
-          <div class="d-flex">
-            <button type="button"  onclick="addButtonsToAlertDeleteProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#deleteProductAlert">
-              <i class="fa-solid fa-trash text-danger"></i> 
-            </button>
-            <button type="button" onclick="addFormToModelEditProducts(products ,${index}) ;addButtonsToEditProducts(products ,${index})" class="btn" data-bs-toggle="modal" data-bs-target="#editProductModal">
-              <i class="fa-solid fa-pen text-warning"></i> 
-            </button>
-          </div>
-        </td>
-      </tr>    
-          `;
-    })
-    .join("");
-
   return `
         <main class="pt-5 pb-5">
             <div class="container">
@@ -248,7 +256,7 @@ const dashboardTableComponent = (headerItems) => {
                     <p>
                         List of products
                     </p>
-                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addProductModal">Add products</button>
+                    <button class="btn btn-dark" id="show-addProductModal" data-bs-toggle="modal" data-bs-target="#addProductModal">Add products</button>
                 </div>
                 <div class="table-responsive">
                     
@@ -264,7 +272,7 @@ const dashboardTableComponent = (headerItems) => {
                             </tr>
                         </thead>
                         <tbody id="table-data">
-                          ${elements}
+                          ${tableRowsComponent(headerItems)}
                         </tbody>
                     </table>
                 </div>
@@ -275,62 +283,116 @@ const dashboardTableComponent = (headerItems) => {
 
 const addProModuleComponent = () => {
   return `
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        Add Product
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div id="model-add-products" class="modal-body">
-                <form id="form" class="row">
-                    <div class="mb-3 col-12 col-md-6">
-                        <label for="Product-name" class="form-label">Product name</label>
-                            <div class="input-group">
-                            <input type="text" class="form-control" id="Product-name" aria-describedby="basic-addon3 basic-addon4">
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12 col-md-6">
-                        <label for="Product-description" class="form-label">Product description</label>
-                            <div class="input-group">
-                            <input type="text" class="form-control" id="Product-description" aria-describedby="basic-addon3 basic-addon4">
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12 col-md-6">
-                        <label for="Product-price" class="form-label">Product price</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="Product-price" aria-describedby="basic-addon3 basic-addon4">
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12 col-md-6">
-                        <label for="Product-img" class="form-label">Image URL</label>
-                        <div class="input-group">
-                            <input type="file" class="form-control" id="Product-img" aria-describedby="basic-addon3 basic-addon4">
-                        </div>
-                    </div>
-                </form>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button id="btnAddProduct" type="button" onclick="addProducts()" class="btn btn-primary">
-                        <span id="spinner" class="spinner-border-sm" aria-hidden="true"></span>
-                        <span role="status">Add Product</span>
-                    </button>
-                </div>
+  <div
+  class="modal fade"
+  id="addProductModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  role="dialog"
+  aria-hidden="true"
+  >
+  <div class="modal-dialog">
+    <form id="addForm" class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div id="model-add-products" class="modal-body">
+        <div class="row">
+          <div class="mb-3 col-12 col-md-6">
+            <label for="Product-name" class="form-label"
+              >Product name</label
+            >
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="Product-name"
+                aria-describedby="basic-addon3 basic-addon4"
+                required
+              />
             </div>
+          </div>
+          <div class="mb-3 col-12 col-md-6">
+            <label for="Product-description" class="form-label"
+              >Product description</label
+            >
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="Product-description"
+                aria-describedby="basic-addon3 basic-addon4"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-3 col-12 col-md-6">
+            <label for="Product-price" class="form-label"
+              >Product price</label
+            >
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="Product-price"
+                aria-describedby="basic-addon3 basic-addon4"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-3 col-12 col-md-6">
+            <label for="Product-img" class="form-label">Image URL</label>
+            <div class="input-group">
+              <input
+                type="file"
+                class="form-control"
+                id="Product-img"
+                aria-describedby="basic-addon3 basic-addon4"
+                required
+                accept="image/*"
+              />
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          id="btnAddProduct"
+          type="submit"
+          onclick="addProducts()"
+          class="btn bg-color-black text-white"
+        >
+          <span
+            id="addSpinner"
+            class="spinner-border-sm"
+            aria-hidden="true"
+          ></span>
+          <span role="status">Add Product</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
         `;
 };
 const editProModuleComponent = () => {
   return `
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
-        <div class="modal-dialog">
+        <form id="updateForm" class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -341,19 +403,18 @@ const editProModuleComponent = () => {
                 <div id="model-edit-products" class="modal-body">
                 </div>
                 <div id="modal-confirm-edit-buttons" class="modal-footer">
-
                 </div>
             </div>
-        </div>
+        </form>
     </div>
         `;
 };
 
 const delProModuleComponent = () => {
   return `
-    <div class="modal fade bd-" id="deleteProductAlert" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
+    <div class="modal fade" id="deleteProductAlert" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <form class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
                         Are you shore you want to delete this product ?
@@ -363,29 +424,44 @@ const delProModuleComponent = () => {
                 <div class="modal-footer" id="modal-confirm-delete-buttons">
                 
                 </div>
-            </div>
+            </form>
         </div>
     </div>
         `;
 };
 
+if (page === "index.html")
 renderHtml(
   navComponent([
     {
       title: "Shop",
-      link: "/index.html",
+      link: "./index.html",
     },
     {
       title: "Dashboard",
-      link: "/page/dashboard.html",
+      link: "./page/dashboard.html",
     },
   ])
 );
+else{
+  renderHtml(
+    navComponent([
+      {
+        title: "Shop",
+        link: "../index.html",
+      },
+      {
+        title: "Dashboard",
+        link: "./dashboard.html",
+      },
+    ])
+  );
+}
 
 if (page === "index.html") renderHtml(headerComponent());
 
 if (page === "index.html")
-  renderHtml(shopMainComponent(getStorage("shopProducts")));
+  renderHtml(shopMainProductComponent(getStorage("shopProducts")));
 
 var cards = [
   {
@@ -408,3 +484,6 @@ renderHtml(editProModuleComponent());
 renderHtml(delProModuleComponent());
 };
 renderHtml(footerComponent());
+
+
+
